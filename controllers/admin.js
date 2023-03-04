@@ -17,7 +17,8 @@ exports.postAddProduct = (req, res, next) => {
     title:title,
     price:price,
     description:description,
-    imageUrl:imageUrl
+    imageUrl:imageUrl,
+    userId : req.user //or req.user._id can be set , it will fetch only the id but when using req.user it will access all the details of user object
   });
   product
     .save()
@@ -82,6 +83,9 @@ exports.postEditProduct = (req, res, next) => {
 
 exports.getProducts = (req, res, next) => {
   Product.find()
+  //.select("title price -_id")
+//Select determines the which you filed you want to select or unselect, that gives the benifit of what we want to show instead of showing all the details of the element or the object.
+  //.populate('userId')
     .then(products => {
       res.render('admin/products', {
         prods: products,
